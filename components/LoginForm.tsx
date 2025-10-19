@@ -13,6 +13,7 @@ import Container from "./aetherium/Container";
 import Loading from "./kingdom-cloud/Loading";
 
 import { useToggle } from "@/hooks/useToggle";
+import ConfirmButton from "./kingdom-cloud/ConfirmButton";
 
 const LoginForm = () => {
   const [form, setForm] = useState<{ email: string; password: string }>({ email: "", password: "" });
@@ -61,11 +62,10 @@ const LoginForm = () => {
 
       <p className={`text-red-500 text-sm ${!isWrongPassword && "invisible"}`}>Wrong Password</p>
 
-      <Button className="bg-gradient-to-b from-red-900 to-red-700 hover:from-red-900/90 hover:to-red-700/90 w-full py-6 font-semibold border border-red-400 shadow shadow-red-400">
-        Sign In
-      </Button>
+      <ConfirmButton>Sign In</ConfirmButton>
       {isLoading && <Loading />}
     </form>
   );
 };
+
 export default LoginForm;

@@ -30,6 +30,18 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Game {
+  id        String   @id @default(cuid())
+  title     String
+  platform  String
+  status    String   @default("Owned") // "owned", "selling", "sold", "keeping"
+  price     Float?   @default(0.00)
+  notes     String?
+  images    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Account {
   userId            String
   type              String
