@@ -1,4 +1,4 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth, { AuthError, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
@@ -17,7 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           label: "Password",
         },
       },
-      authorize: async (credentials): Promise<User | null> => {
+      authorize: async (credentials): Promise<User | null | Error> => {
         //  Find and grab a user based on the email provided, if there is no user return null
         const user = await prisma.user.findUnique({ where: { email: credentials.email as string } });
         if (!user) return null;
