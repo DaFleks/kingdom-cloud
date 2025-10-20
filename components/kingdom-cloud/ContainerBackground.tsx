@@ -22,7 +22,7 @@ const ContainerBackground = (props: ContainerBackgroundProps) => {
         fill
         style={{ objectFit: "cover", objectPosition: props.objectPosition }}
       />
-      <Container className="h-full overflow-y-auto">{props.children}</Container>
+      <Container className="h-full">{props.children}</Container>
     </Container>
   );
 };

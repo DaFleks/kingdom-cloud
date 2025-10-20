@@ -12,6 +12,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronRightCircleIcon } from "lucide-react";
 import GameCard from "@/components/kingdom-cloud/GameCard";
+import GamesList from "@/components/GamesList";
 
 export default async function Home() {
   const session = await auth();
@@ -20,17 +21,11 @@ export default async function Home() {
   const games = await prisma.game.findMany();
 
   return (
-    <ContainerBackground imageSrc={mainWallpaper.src} alt="" objectPosition="50% 50%">
-      <Container className="p-8 mx-auto space-y-8 xl:w-2/3">
-        <h1 className="text-xl font-bold">All Games</h1>
-        <Container className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {games.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
-        </Container>
+    <Container className="p-8 mx-auto space-y-8 xl:w-2/3">
+      <h1 className="text-xl font-bold">All Games</h1>
 
-        <SignOutButton />
-      </Container>
-    </ContainerBackground>
+      <GamesList games={games}/>
+      <SignOutButton />
+    </Container>
   );
 }

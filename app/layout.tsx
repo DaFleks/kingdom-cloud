@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import mainWallpaper from "@/public/images/main-wallpaper.webp";
+import Image from "next/image";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -19,7 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.className} antialiased bg-black text-white`}>{children}</body>
+      <body
+        className={`${outfit.className} antialiased bg-black text-white relative`}
+        style={{ backgroundImage: `url("${mainWallpaper.src}")` }}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

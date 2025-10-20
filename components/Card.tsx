@@ -10,7 +10,7 @@ interface CardProps {
 
 const Card = (props: CardProps) => {
   return (
-    <Container className={cn("border border-slate-500 bg-gradient-to-b from-slate-950/66 to-slate-700/66 text-sm shadow-lg shadow-neutral-900 overflow-hidden", props.className)}>
+    <Container className={cn("border border-slate-600 bg-gradient-to-b from-slate-950/33 to-slate-400/33 text-sm shadow-lg shadow-neutral-900 overflow-hidden", props.className)}>
       {props.children}
     </Container>
   );
