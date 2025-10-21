@@ -25,13 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.className} antialiased bg-black text-white relative !overflow-y-hidden`}>
+      <body className={`${outfit.className} antialiased bg-black text-white relative !overflow-y-hidden flex flex-col`}>
         <Wallpaper />
         <SessionProvider>
-          <Navbar />
+        <Navbar />
         </SessionProvider>
 
-        <Container as="main" className="!pt-32 p-8 h-full overflow-y-auto">
+        <Container as="main" className="p-8 grow !overflow-y-auto">
           {children}
         </Container>
       </body>

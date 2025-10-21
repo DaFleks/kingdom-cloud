@@ -13,7 +13,7 @@ export default async function Home() {
 
   return (
     <Container
-      className="mx-auto space-y-8 
+      className="mx-auto space-y-8
     xl:w-2/3">
       <GamesList games={games} />
       <SignOutButton />
