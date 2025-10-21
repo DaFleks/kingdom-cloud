@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,25 +9,28 @@ import Container from "./aetherium/Container";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 
-import ContainerBackground from "./kingdom-cloud/ContainerBackground";
-
+import LoginSidePanel from "./LoginSidePanel";
 import LoginHeader from "./LoginHeader";
 import LoginForm from "./LoginForm";
 
 import googleIcon from "@/public/icons/google-icon.png";
 import discordIcon from "@/public/icons/discord-icon.png";
-import loginBg from "@/public/images/login-bg.webp";
+
+import { randomIntBetween } from "@/lib/utils";
 
 const Login = () => {
+  const [imageIndex, setImageIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    setImageIndex(randomIntBetween(1, 17));
+  }, []);
+
   return (
     <Container
       className="flex justify-center w-full h-fit m-auto border border-neutral-500 shadow-lg shadow-neutral-950 overflow-hidden
     md:w-full lg:w-full xl:w-1/2">
-      <ContainerBackground
-        imageSrc={loginBg.src}
-        alt=""
-        objectPosition="50% 50%"
-        className="hidden md:block min-w-[60%] w-[60%]"></ContainerBackground>
+      <LoginSidePanel src={`https://ik.imagekit.io/f3yl3upyd/kh${imageIndex}.webp`} alt="" />
+
       <Container className="w-full h-full m-auto flex flex-col gap-8 bg-neutral-800/90 justify-between ">
         {/* Header */}
         <LoginHeader />
