@@ -5,6 +5,8 @@ import "./globals.css";
 
 import Wallpaper from "@/components/Wallpaper";
 import Container from "@/components/aetherium/Container";
+import Navbar from "@/components/Navbar";
+import { SessionProvider } from "next-auth/react";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -25,7 +27,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${outfit.className} antialiased bg-black text-white relative !overflow-y-hidden`}>
         <Wallpaper />
-        <Container as="main" className="p-8 h-full overflow-y-auto">
+        <SessionProvider>
+          <Navbar />
+        </SessionProvider>
+
+        <Container as="main" className="!pt-32 p-8 h-full overflow-y-auto">
           {children}
         </Container>
       </body>
