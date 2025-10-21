@@ -8,20 +8,26 @@ import Container from "./aetherium/Container";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 
+import ContainerBackground from "./kingdom-cloud/ContainerBackground";
+
 import LoginHeader from "./LoginHeader";
 import LoginForm from "./LoginForm";
-import LoginLogo from "./LoginLogo";
 
 import googleIcon from "@/public/icons/google-icon.png";
 import discordIcon from "@/public/icons/discord-icon.png";
+import loginBg from "@/public/images/login-bg.webp";
 
 const Login = () => {
   return (
-    <Container className="w-full h-full flex flex-col justify-center gap-8 mx-auto xl:w-1/5">
-      {/* Crown Logo */}
-      <LoginLogo />
-
-      <Container className="flex flex-col gap-8 bg-neutral-800/90 rounded-xl justify-center border-4 border-neutral-700 xl:col-span-2">
+    <Container
+      className="flex justify-center w-full h-fit m-auto border border-neutral-500 shadow-lg shadow-neutral-950 overflow-hidden
+    md:w-full lg:w-full xl:w-1/2">
+      <ContainerBackground
+        imageSrc={loginBg.src}
+        alt=""
+        objectPosition="50% 50%"
+        className="hidden md:block min-w-[60%] w-[60%]"></ContainerBackground>
+      <Container className="w-full h-full m-auto flex flex-col gap-8 bg-neutral-800/90 justify-between ">
         {/* Header */}
         <LoginHeader />
 

@@ -16,7 +16,7 @@ const LoginLogo = (props: LoginLogoProps) => {
       <Container className="w-1/4 aspect-square relative overflow-hidden m-auto">
         <Image src={logo} alt="" fill style={{ objectFit: "contain" }} />
       </Container>
-      <h1 className="text-4xl text-center font-bold">KINGDOM CLOUD</h1>
+      <h1 className="text-3xl text-center font-bold">KINGDOM CLOUD</h1>
     </Container>
   );
 };

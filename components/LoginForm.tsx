@@ -13,7 +13,6 @@ import Container from "./aetherium/Container";
 import Loading from "./kingdom-cloud/Loading";
 
 import { useToggle } from "@/hooks/useToggle";
-import ConfirmButton from "./kingdom-cloud/ConfirmButton";
 
 const LoginForm = () => {
   const [form, setForm] = useState<{ email: string; password: string }>({ email: "", password: "" });
@@ -39,10 +38,10 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 px-4">
       <Container className="space-y-4">
-        <Container className="flex items-center justify-between bg-gradient-to-r from-zinc-900/75 to-zinc-700/25 px-2 py-1 rounded-xl">
+        <Container className="flex items-center justify-between border border-neutral-500 px-2 py-1 rounded-xl">
           <Input onChange={handleChange} type="email" id="email" name="email" placeholder="Email" />
         </Container>
-        <Container className="flex items-center justify-between bg-gradient-to-r from-zinc-900/75 to-zinc-700/25 px-2 py-1 rounded-xl">
+        <Container className="flex items-center justify-between border border-neutral-500 px-2 py-1 rounded-xl">
           <Input
             onChange={handleChange}
             type={isPasswordVisible ? "text" : "password"}
@@ -62,7 +61,7 @@ const LoginForm = () => {
 
       <p className={`text-red-500 text-sm ${!isWrongPassword && "invisible"}`}>Wrong Password</p>
 
-      <ConfirmButton>Sign In</ConfirmButton>
+      <Button variant="confirm">Sign In</Button>
       {isLoading && <Loading />}
     </form>
   );

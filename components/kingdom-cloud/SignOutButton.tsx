@@ -2,10 +2,10 @@
 
 import { signOut } from "next-auth/react";
 
-import ConfirmButton from "./ConfirmButton";
 import Loading from "./Loading";
 
 import { useToggle } from "@/hooks/useToggle";
+import { Button } from "../ui/button";
 
 const SignOutButton = () => {
   const [isLoading, handleIsLoading] = useToggle(false);
@@ -17,7 +17,9 @@ const SignOutButton = () => {
 
   return (
     <>
-      <ConfirmButton onClick={handleSignOut}>Sign Out</ConfirmButton>
+      <Button variant="confirm" onClick={handleSignOut}>
+        Sign Out
+      </Button>
       {isLoading && <Loading />}
     </>
   );

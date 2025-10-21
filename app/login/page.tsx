@@ -1,19 +1,15 @@
-import ContainerBackground from "@/components/kingdom-cloud/ContainerBackground";
-import Login from "@/components/Login";
-import loginWallpaper from "@/public/images/login-wallpaper.webp";
 import { SessionProvider } from "next-auth/react";
+
+import Container from "@/components/aetherium/Container";
+import Login from "@/components/Login";
 
 const page = () => {
   return (
-    <ContainerBackground
-      className="p-8 flex"
-      imageSrc={loginWallpaper.src}
-      alt="Kingdom Hearts Themed Wallpaper Pattern"
-      objectPosition="50% 50%">
+    <Container className="h-full flex flex-col justify-center gap-4">
       <SessionProvider>
         <Login />
       </SessionProvider>
-    </ContainerBackground>
+    </Container>
   );
 };
 

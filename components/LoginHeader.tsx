@@ -1,13 +1,21 @@
 "use client";
 
+import Image from "next/image";
+
 import Container from "./aetherium/Container";
-import Text from "./aetherium/Text";
+
+import LoginLogo from "./LoginLogo";
+
+import loginBg from "@/public/images/login-bg.webp";
 
 const LoginHeader = () => {
   return (
-    <Container className="space-y-4 text-center bg-gradient-to-b from-black to-blue-950/70 p-8 rounded-t-xl backdrop-blur-sm">
-      <h3 className="text-2xl font-light text-sky-200">Hearts Connected</h3>
-      <Text className="text-xs text-blue-300/80">Enter your Keyblade to manage your games</Text>
+    <Container className="space-y-4 text-center p-8 flex items-center justify-center relative select-none overflow-hidden">
+      <Image src={loginBg.src} alt="" fill style={{ objectFit: "cover" }} className="" />
+      <Container className="relative z-10">
+        <LoginLogo />
+      </Container>
+      <Container className="absolute top-0 left-0 h-full w-full bg-gradient-to-b from-black/80 to-blue-950/80" />
     </Container>
   );
 };

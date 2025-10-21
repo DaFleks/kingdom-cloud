@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import mainWallpaper from "@/public/images/main-wallpaper.webp";
-import Image from "next/image";
+
+import Wallpaper from "@/components/Wallpaper";
+import Container from "@/components/aetherium/Container";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -22,11 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${outfit.className} antialiased bg-black text-white relative`}
-        style={{ backgroundImage: `url("${mainWallpaper.src}")` }}>
-        <Navbar />
-        {children}
+      <body className={`${outfit.className} antialiased bg-black text-white relative !overflow-y-hidden`}>
+        <Wallpaper />
+        <Container as="main" className="p-8 h-full overflow-y-auto">
+          {children}
+        </Container>
       </body>
     </html>
   );
