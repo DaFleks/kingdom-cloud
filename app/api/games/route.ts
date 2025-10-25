@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     },
   });
 
-  return NextResponse.json({ message: "Game Successfully Added!", status: 201 });
+  return NextResponse.json({ message: "Game Successfully Added!", status: 201, gameId: newId });
 }
 
 export async function PATCH(req: Request) {
@@ -122,5 +122,23 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ message: "There was an error", status: 400 });
   }
 
-  return NextResponse.json({ message: "Game Successfully Updated!", status: 201 });
+  return NextResponse.json({ message: "Game Successfully Added!", status: 201, gameId: formData.get("id") as string });
+}
+
+export async function DELETE(req: Request) {
+  const { id } = await req.json();
+
+  try {
+    await prisma.game.delete({ where: { id: id } });
+  } catch (error) {
+    return NextResponse.json({ message: "There was an error", status: 400 });
+  }
+
+  try {
+    await imagekit.deleteFolder(`/kingdom-cloud/games/${id}`);
+  } catch (error) {
+    // Ignored — cleanup failure is non-critical
+  }
+
+  return NextResponse.json({ message: "Game successfully deleted!", status: 200 });
 }

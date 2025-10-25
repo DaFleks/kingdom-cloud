@@ -2,11 +2,9 @@
 
 import { signOut } from "next-auth/react";
 
-import Loading from "./Loading";
-
-import { useToggle } from "@/hooks/useToggle";
 import { Button } from "../ui/button";
-import { useLoading } from "@/hooks/LoadingContext";
+
+import { useLoading } from "@/context/LoadingContext";
 
 const SignOutButton = () => {
   const { showLoading, hideLoading } = useLoading();

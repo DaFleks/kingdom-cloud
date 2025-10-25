@@ -2,7 +2,6 @@
 
 import { ChangeEvent, FormEvent, MouseEvent, useRef, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { CameraIcon, ImageIcon, XIcon } from "lucide-react";
 
 import { toast } from "sonner";
@@ -14,13 +13,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 import Container from "./aetherium/Container";
 
-import Modal from "./kingdom-cloud/Modal";
-
-import { useToggle } from "@/hooks/useToggle";
-
 import platforms from "@/lib/platforms.json";
 import { Game } from "@prisma/client";
-import { useLoading } from "@/hooks/LoadingContext";
+import { useLoading } from "@/context/LoadingContext";
+import { useModal } from "@/context/ModalContext";
+import GameFormCompleteModal from "./GameFormCompleteModal";
+import ImageModal from "./ui/ImageModal";
 
 type GameForm = {
   title: string;
@@ -45,17 +43,17 @@ const GameForm = (props: GameProps) => {
     imageFiles: [],
   };
 
-  //  Hooks, State, Refs
-  const router = useRouter();
-
+  //  State
   const [form, setForm] = useState<GameForm>(defaultValues);
   const [previews, setPreviews] = useState<string[]>([]);
-  const [existingImageUrls, setExistingImageUrls] = useState<string[]>(props.game ? props.game.images : []);
+  const [existingImageUrls, setExistingImageUrls] = useState<string[]>(props.game ? props.game.images : []); // Images that exist on an already existing game
   const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+
+  //  Hooks
   const { showLoading, hideLoading } = useLoading();
+  const { openModal } = useModal();
 
-  const [isRegistrationComplete, handleisRegistrationComplete] = useToggle(false);
-
+  //  Refs
   const fileCameraRef = useRef<HTMLInputElement | null>(null);
   const fileGalleryRef = useRef<HTMLInputElement | null>(null);
 
@@ -91,6 +89,8 @@ const GameForm = (props: GameProps) => {
   };
 
   const handleDeleteExistingImage = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
     const buttonIndex = parseInt(e.currentTarget.name);
     setImagesToDelete((prev) => [...prev, existingImageUrls[buttonIndex]]);
     setExistingImageUrls((prev) => [...prev].filter((existingImageUrl, i) => i !== buttonIndex));
@@ -124,196 +124,173 @@ const GameForm = (props: GameProps) => {
 
     hideLoading();
 
-    if (data.status === 201) {
-      setForm(defaultValues);
-      setPreviews([]);
-      handleisRegistrationComplete();
-    }
-
+    if (data.status === 201) openModal(<GameFormCompleteModal id={data.gameId} isUpdate={props.game ? true : false} />);
     if (data.status !== 201) toast.error("There was an error, please try again.");
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8 h-full overflow-hidden">
-        <Container className="grid grid-cols-3 gap-8">
-          {/* TITLE */}
-          <Container className="space-y-4 col-span-3">
-            <Label htmlFor="title">Title</Label>
-            <Input className="bg-neutral-800/80" type="text" id="title" name="title" required value={form.title} onChange={handleChange} />
-          </Container>
-
-          {/* PLATFORM */}
-          <Container className="space-y-4">
-            <Label htmlFor="platform">Platform</Label>
-            <Select
-              defaultValue={form.platform}
-              onValueChange={(value: string) => {
-                handleSelectChange("platform", value);
-              }}>
-              <SelectTrigger className="w-full bg-neutral-800/80 border-0 py-6 mb-0">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {platforms.map((platform, i) => (
-                  <SelectItem key={i} value={platform.value}>
-                    {platform.output}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </Container>
-
-          {/* STATUS */}
-          <Container className="space-y-4">
-            <Label htmlFor="status">Status</Label>
-            <Select
-              defaultValue={form.status}
-              onValueChange={(value: string) => {
-                handleSelectChange("status", value);
-              }}>
-              <SelectTrigger className="w-full bg-neutral-800/80 border-0 py-6 mb-0">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Undecided">Undecided</SelectItem>
-                <SelectItem value="Selling">Selling</SelectItem>
-                <SelectItem value="Sold">Sold</SelectItem>
-                <SelectItem value="Keeping">Keeping</SelectItem>
-              </SelectContent>
-            </Select>
-          </Container>
-
-          {/* PRICE */}
-          <Container className="space-y-4">
-            <Label htmlFor="title">Price</Label>
-            <Input
-              className="bg-neutral-800/80"
-              type="number"
-              id="price"
-              name="price"
-              onChange={handleChange}
-              value={form.price}
-              min="0"
-              step="0.01"
-            />
-          </Container>
-
-          {/* NOTES */}
-          <Container className="space-y-4 col-span-3">
-            <Label htmlFor="title">Notes</Label>
-            <Textarea
-              className="bg-neutral-800/80 h-[100px] resize-none border-0 focus-visible:ring-0"
-              id="notes"
-              name="notes"
-              onChange={handleChange}
-              value={form.notes!}
-            />
-          </Container>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-8 h-full overflow-hidden">
+      <Container className="grid grid-cols-3 gap-4">
+        {/* TITLE */}
+        <Container className="space-y-4 col-span-3">
+          <Label htmlFor="title">Title</Label>
+          <Input className="bg-neutral-800/80" type="text" id="title" name="title" required value={form.title} onChange={handleChange} />
         </Container>
 
-        {/* TAKE A PHOTO BUTTON */}
-        <Container className="grid grid-cols-2 gap-8">
-          <Container>
-            <Label htmlFor="fileCameraBtn">
-              <Button id="fileCameraBtn" name="fileCameraBtn" type="button" variant="neutral" onClick={handleFileClick}>
-                <CameraIcon />
-                Take a Photo
-              </Button>
-            </Label>
-            <Input
-              ref={fileCameraRef}
-              className="bg-neutral-800/80 hidden"
-              type="file"
-              accept="image/*"
-              multiple
-              capture="environment"
-              id="fileCamera"
-              name="fileCamera"
-              onChange={handleChange}
-            />
-          </Container>
-
-          {/* UPLOAD IMAGE BUTTON */}
-          <Container>
-            <Label htmlFor="images">
-              <Button id="fileGalleryBtn" name="fileGalleryBtn" type="button" variant="neutral" onClick={handleFileClick}>
-                <ImageIcon />
-                Upload Images
-              </Button>
-            </Label>
-            <Input
-              ref={fileGalleryRef}
-              className="bg-neutral-800/80 hidden"
-              type="file"
-              accept="image/*"
-              multiple
-              id="fileGallery"
-              name="fileGallery"
-              onChange={handleChange}
-            />
-          </Container>
+        {/* PLATFORM */}
+        <Container className="space-y-4">
+          <Label htmlFor="platform">Platform</Label>
+          <Select
+            defaultValue={form.platform}
+            onValueChange={(value: string) => {
+              handleSelectChange("platform", value);
+            }}>
+            <SelectTrigger className="w-full bg-neutral-800/80 border-0 py-6 mb-0">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {platforms.map((platform, i) => (
+                <SelectItem key={i} value={platform.value}>
+                  {platform.output}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </Container>
 
-        {/* IMAGE PREVIEW GRID */}
-        <Container className="grow grid grid-cols-3 xl:grid-cols-4 gap-8 overflow-y-auto">
-          {existingImageUrls.map((image, i) => (
-            <Container key={i} className="relative w-full aspect-square bg-neutral-500/33 rounded-lg">
-              <Button
-                id={i.toString()}
-                name={i.toString()}
-                type="button"
-                className="absolute z-50 !p-1 w-fit h-fit right-2 top-2"
-                onClick={handleDeleteExistingImage}>
-                <XIcon className="!w-4 !h-4" />
-              </Button>
-              <Image src={image} alt="" fill style={{ objectFit: "contain" }} className="p-2" />
-            </Container>
-          ))}
-          {previews.map((preview, i) => (
-            <Container key={i} className="relative w-full aspect-square bg-neutral-500/33 rounded-lg">
-              <Button
-                id={i.toString()}
-                name={i.toString()}
-                type="button"
-                className="absolute z-50 !p-1 w-fit h-fit right-2 top-2"
-                onClick={handleDeleteImage}>
-                <XIcon className="!w-4 !h-4" />
-              </Button>
-              <Image src={preview} alt="" fill style={{ objectFit: "contain" }} className="p-2" />
-            </Container>
-          ))}
+        {/* STATUS */}
+        <Container className="space-y-4">
+          <Label htmlFor="status">Status</Label>
+          <Select
+            defaultValue={form.status}
+            onValueChange={(value: string) => {
+              handleSelectChange("status", value);
+            }}>
+            <SelectTrigger className="w-full bg-neutral-800/80 border-0 py-6 mb-0">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Undecided">Undecided</SelectItem>
+              <SelectItem value="Selling">Selling</SelectItem>
+              <SelectItem value="Sold">Sold</SelectItem>
+              <SelectItem value="Keeping">Keeping</SelectItem>
+            </SelectContent>
+          </Select>
         </Container>
-        <Container className="grid grid-cols-2 gap-4">
-          {props.game && <Button variant="confirm">Delete Game</Button>}
-          <Button variant="confirm" className={`${!props.game && "col-span-2"}`}>
-            Add Game
-          </Button>
+
+        {/* PRICE */}
+        <Container className="space-y-4">
+          <Label htmlFor="title">Price</Label>
+          <Input
+            className="bg-neutral-800/80"
+            type="number"
+            id="price"
+            name="price"
+            onChange={handleChange}
+            value={form.price ?? ""}
+            min="0"
+            step="0.01"
+          />
         </Container>
-      </form>
 
-      {isRegistrationComplete && (
-        <Modal open={isRegistrationComplete}>
-          <Container className="w-2/3 mx-auto space-y-8">
-            <h1 className="text-3xl text-center">Game Successfully Added!</h1>
+        {/* NOTES */}
+        <Container className="space-y-4 col-span-3">
+          <Label htmlFor="title">Notes</Label>
+          <Textarea
+            className="bg-neutral-800/80 h-[100px] resize-none border-0 focus-visible:ring-0"
+            id="notes"
+            name="notes"
+            onChange={handleChange}
+            value={form.notes!}
+          />
+        </Container>
+      </Container>
 
-            <Button variant="confirm" onClick={handleisRegistrationComplete}>
-              Add Another Game
+      {/* TAKE A PHOTO BUTTON */}
+      <Container className="grid grid-cols-2 gap-4">
+        <Container>
+          <Label htmlFor="fileCameraBtn">
+            <Button id="fileCameraBtn" name="fileCameraBtn" type="button" variant="neutral" onClick={handleFileClick}>
+              <CameraIcon />
+              Take a Photo
             </Button>
-            <Button variant="confirm" onClick={() => {}}>
-              Continue Editing This Game
+          </Label>
+          <Input
+            ref={fileCameraRef}
+            className="bg-neutral-800/80 hidden"
+            type="file"
+            accept="image/*"
+            multiple
+            capture="environment"
+            id="fileCamera"
+            name="fileCamera"
+            onChange={handleChange}
+          />
+        </Container>
+
+        {/* UPLOAD IMAGE BUTTON */}
+        <Container>
+          <Label htmlFor="images">
+            <Button id="fileGalleryBtn" name="fileGalleryBtn" type="button" variant="neutral" onClick={handleFileClick}>
+              <ImageIcon />
+              Upload Images
             </Button>
+          </Label>
+          <Input
+            ref={fileGalleryRef}
+            className="bg-neutral-800/80 hidden"
+            type="file"
+            accept="image/*"
+            multiple
+            id="fileGallery"
+            name="fileGallery"
+            onChange={handleChange}
+          />
+        </Container>
+      </Container>
+
+      {/* IMAGE PREVIEW GRID */}
+      <Container className="grow grid grid-cols-3 gap-8 overflow-y-auto">
+        {existingImageUrls.map((image, i) => (
+          <Container
+            key={i}
+            className="relative w-full !aspect-square bg-neutral-500/33 rounded-lg cursor-pointer"
+            onClick={() => {
+              openModal(<ImageModal src={image} />);
+            }}>
             <Button
-              variant="confirm"
-              onClick={() => {
-                router.push("/");
-              }}>
-              Go back to Main Page
+              id={i.toString()}
+              name={i.toString()}
+              type="button"
+              className="absolute z-10 !p-1 w-fit h-fit right-2 top-2"
+              onClick={handleDeleteExistingImage}>
+              <XIcon className="!w-4 !h-4" />
             </Button>
+            <Image src={image} alt="" fill style={{ objectFit: "contain" }} className="p-2" />
           </Container>
-        </Modal>
-      )}
-    </>
+        ))}
+        {previews.map((preview, i) => (
+          <Container
+            key={i}
+            className="relative w-full aspect-square bg-neutral-500/33 rounded-lg"
+            onClick={() => {
+              openModal(<ImageModal src={preview} />);
+            }}>
+            <Button
+              id={i.toString()}
+              name={i.toString()}
+              type="button"
+              className="absolute z-10 !p-1 w-fit h-fit right-2 top-2"
+              onClick={handleDeleteImage}>
+              <XIcon className="!w-4 !h-4" />
+            </Button>
+            <Image src={preview} alt="" fill style={{ objectFit: "contain" }} className="p-2" />
+          </Container>
+        ))}
+      </Container>
+
+      <Button variant="confirm">{props.game ? "Confirm Changes" : "Add Game"}</Button>
+    </form>
   );
 };
 

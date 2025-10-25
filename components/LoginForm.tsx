@@ -11,7 +11,7 @@ import { Button } from "./ui/button";
 import Container from "./aetherium/Container";
 
 import { useToggle } from "@/hooks/useToggle";
-import { useLoading } from "@/hooks/LoadingContext";
+import { useLoading } from "@/context/LoadingContext";
 
 const LoginForm = () => {
   const [form, setForm] = useState<{ email: string; password: string }>({ email: "", password: "" });

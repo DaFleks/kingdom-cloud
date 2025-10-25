@@ -5,7 +5,7 @@ import Container from "./aetherium/Container";
 import Image from "next/image";
 import Text from "./aetherium/Text";
 import { Button } from "./ui/button";
-import { FilePlusIcon } from "lucide-react";
+import { BookPlusIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Separator } from "./ui/separator";
@@ -23,7 +23,7 @@ const NavbarClient = (props: NavbarClientProps) => {
   if (pathname === "/login") return;
   return (
     <>
-      <Container as="header" className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-slate-700/66 to-cyan-950/66 !overflow-hidden">
+      <Container as="header" className="fixed top-0 left-0 w-full z-30 bg-gradient-to-b from-slate-700/66 to-cyan-950/66 !overflow-hidden">
         <Container as="nav" className="xl:w-2/3 mx-auto h-[80px] p-4 flex justify-between items-center">
           <Link href="/" className="relative w-full xl:w-1/4 flex items-center gap-4">
             <Container className="relative w-[35px] aspect-square">
@@ -40,7 +40,7 @@ const NavbarClient = (props: NavbarClientProps) => {
           <Container className="space-x-12 flex items-center">
             <Button variant="ghost" size="icon">
               <Link href="/add">
-                <FilePlusIcon className="!w-8 !h-8" />
+                <BookPlusIcon className="!w-8 !h-8" />
               </Link>
             </Button>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+
 import Container from "./aetherium/Container";
 
 import { randomIntBetween } from "@/lib/utils";
@@ -11,7 +12,7 @@ const LoginSidePanel = () => {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    setImageIndex(randomIntBetween(1, 17));
+    setImageIndex(randomIntBetween(1, 16));
   }, []);
 
   return (
@@ -21,9 +22,9 @@ const LoginSidePanel = () => {
           src={backgrounds[imageIndex].src}
           fill
           alt="Login Side Wallpaper"
-          objectPosition="50% 50%"
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", objectPosition: "50% 50%" }}
           priority
+          sizes="w"
         />
       )}
 
@@ -35,9 +36,9 @@ const LoginSidePanel = () => {
             src={backgrounds[imageIndex].src}
             fill
             alt="Login Side Wallpaper"
-            objectPosition="50% 50%"
-            style={{ objectFit: "contain", filter: "drop-shadow(0 7px 10px rgba(0,0,0,1.0))" }}
+            style={{ objectFit: "contain", objectPosition: "50% 50%", filter: "drop-shadow(0 7px 10px rgba(0,0,0,1.0))" }}
             priority
+            sizes="w"
           />
         )}
       </Container>

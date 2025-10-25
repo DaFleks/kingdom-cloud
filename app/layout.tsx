@@ -9,9 +9,10 @@ import Navbar from "@/components/Navbar";
 
 import Loading from "@/components/kingdom-cloud/Loading";
 
-import { LoadingProvider } from "@/hooks/LoadingContext";
+import { LoadingProvider } from "@/context/LoadingContext";
 
 import "./globals.css";
+import ModalProvider from "@/context/ModalContext";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -32,12 +33,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${outfit.className} antialiased bg-black text-white relative !overflow-y-hidden flex flex-col`}>
         <Wallpaper />
-        <Toaster />
         <LoadingProvider>
-          <Navbar />
-          <Container as="main" className="grow xl:ml-4 !overflow-y-auto flex flex-col p-4">
-            {children}
-          </Container>
+          <ModalProvider>
+            <Navbar />
+            <Container as="main" className="grow xl:ml-4 !overflow-y-auto flex flex-col p-4">
+              {children}
+            </Container>
+          </ModalProvider>
           <Loading />
         </LoadingProvider>
       </body>

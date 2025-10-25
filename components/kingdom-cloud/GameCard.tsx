@@ -23,10 +23,10 @@ const GameCard = (props: GameCardProps) => {
       <GameCardImage src={props.game.images[0]} />
 
       {/* TITLE & PLATFORM */}
-      <Container className="w-full">
+      <Container className="w-full overflow-hidden">
         <Container className="mb-2">
           <Link href={`/games/${props.game.id}`}>
-            <Text className="text-lg font-semibold overflow-hidden">{props.game.title}</Text>
+            <Text className="text-lg font-semibold break-words">{props.game.title}</Text>
           </Link>
           <Text className="text-amber-500">{props.game.platform}</Text>
         </Container>

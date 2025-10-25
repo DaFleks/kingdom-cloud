@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Container from "../aetherium/Container";
 import Text from "../aetherium/Text";
+import ImageModal from "../ui/ImageModal";
+import { useModal } from "@/context/ModalContext";
 
 interface GameCardImageProps {
   src: string;
@@ -10,8 +12,13 @@ interface GameCardImageProps {
 }
 
 const GameCardImage = (props: GameCardImageProps) => {
+  const { openModal } = useModal();
   return (
-    <Container className="relative w-1/2 aspect-square select-none bg-gradient-to-b from-neutral-600/75 to-neutral-800/75 rounded-xl flex justify-center items-center shadow-md shadow-neutral-900">
+    <Container
+      onClick={() => {
+        openModal(<ImageModal src={props.src} />);
+      }}
+      className="cursor-pointer relative min-w-1/4 aspect-square select-none bg-gradient-to-b from-neutral-600/75 to-neutral-800/75 rounded-xl flex justify-center items-center shadow-md shadow-neutral-900">
       {props.src ? (
         <Image
           src={props.src}
