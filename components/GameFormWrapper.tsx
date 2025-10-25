@@ -21,7 +21,7 @@ const GameFormWrapper = (props: GameFormWrapperProps) => {
   };
 
   return (
-    <Container className="w-full p-4 col-span-3 lg:col-span-3 2xl:col-span-1 bg-slate-900/66 flex flex-col">
+    <Container className="w-full p-4 col-span-3 lg:col-span-3 2xl:col-span-1 bg-slate-900/66 flex flex-col overflow-hidden">
       <Container className="flex justify-between">
         <h1 className="text-2xl">{props.title}</h1>
 
