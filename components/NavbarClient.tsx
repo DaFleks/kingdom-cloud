@@ -27,7 +27,13 @@ const NavbarClient = (props: NavbarClientProps) => {
         <Container as="nav" className="xl:w-2/3 mx-auto h-[80px] p-4 flex justify-between items-center">
           <Link href="/" className="relative w-full xl:w-1/4 flex items-center gap-4">
             <Container className="relative w-[35px] aspect-square">
-              <Image src={loginLogo.src} alt="" fill style={{ objectFit: "contain" }} />
+              <Image
+                src={loginLogo.src}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 16vw"
+                style={{ objectFit: "contain" }}
+              />
             </Container>
             <Text className="text-sm w-full mt-2">KINGDOM CLOUD</Text>
           </Link>

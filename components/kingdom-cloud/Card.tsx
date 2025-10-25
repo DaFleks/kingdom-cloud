@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Container from "./aetherium/Container";
+import Container from "../aetherium/Container";
 
 interface CardProps {
   children?: React.ReactNode;

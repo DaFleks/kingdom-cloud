@@ -26,4 +26,5 @@ const GamesList = (props: GamesList) => {
     </>
   );
 };
+
 export default GamesList;

@@ -1,10 +1,11 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
+import Container from "@/components/aetherium/Container";
+
 import GamesList from "@/components/GamesList";
 
 import prisma from "@/lib/prisma";
-import Container from "@/components/aetherium/Container";
 
 export default async function Home() {
   const session = await auth();

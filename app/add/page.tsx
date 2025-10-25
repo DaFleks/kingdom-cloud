@@ -8,15 +8,6 @@ import { ChevronLeftCircleIcon } from "lucide-react";
 import prisma from "@/lib/prisma";
 
 const page = async () => {
-  const game = await prisma.game.findFirst({ where: { title: ".Hack" } });
-  // game!.images = [
-  //   "https://images.igdb.com/igdb/image/upload/t_cover_big/co2yfi.jpg",
-  //   "https://images.igdb.com/igdb/image/upload/t_cover_big/co7i1e.jpg",
-  //   "https://images.igdb.com/igdb/image/upload/t_cover_big/co5t7p.jpg",
-  // ];
-
-  // if (game) await prisma.game.update({ data: game, where: { id: game!.id } });
-
   return (
     <Container
       className="w-full h-full m-auto border border-slate-500 flex 
