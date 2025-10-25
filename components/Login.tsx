@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,22 +15,12 @@ import LoginForm from "./LoginForm";
 import googleIcon from "@/public/icons/google-icon.png";
 import discordIcon from "@/public/icons/discord-icon.png";
 
-import { randomIntBetween } from "@/lib/utils";
-
 const Login = () => {
-  const [imageIndex, setImageIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    setImageIndex(randomIntBetween(1, 17));
-  }, []);
-
   return (
-    <Container
-      className="flex justify-center w-full h-fit m-auto border border-neutral-500 shadow-lg shadow-neutral-950 overflow-hidden
-    md:w-full lg:w-full xl:w-1/2">
-      <LoginSidePanel src={`https://ik.imagekit.io/f3yl3upyd/kh${imageIndex}.webp`} alt="" />
+    <Container className="flex justify-center m-auto w-full h-fit border border-neutral-500 shadow-lg shadow-neutral-950 overflow-hidden">
+      <LoginSidePanel />
 
-      <Container className="w-full h-full m-auto flex flex-col gap-8 bg-neutral-800/90 justify-between ">
+      <Container className="w-full m-auto flex flex-col gap-8 bg-neutral-800/90 justify-between ">
         {/* Header */}
         <LoginHeader />
 

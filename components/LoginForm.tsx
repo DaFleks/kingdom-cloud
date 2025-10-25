@@ -10,15 +10,17 @@ import { Button } from "./ui/button";
 
 import Container from "./aetherium/Container";
 
-import Loading from "./kingdom-cloud/Loading";
-
 import { useToggle } from "@/hooks/useToggle";
+import { useLoading } from "@/hooks/LoadingContext";
 
 const LoginForm = () => {
   const [form, setForm] = useState<{ email: string; password: string }>({ email: "", password: "" });
+
   const [isPasswordVisible, handleIsPasswordVisible] = useToggle(false);
   const [isWrongPassword, handleIsWrongPassword] = useToggle(false);
-  const [isLoading, handleIsLoading] = useToggle(false);
+
+  const { showLoading, hideLoading } = useLoading();
+
   const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => setForm((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
@@ -26,13 +28,16 @@ const LoginForm = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    handleIsLoading();
+    showLoading();
     const response = await signIn("credentials", { ...form, redirect: false });
-    console.log(response);
-    handleIsLoading();
+    hideLoading();
 
     if (response.error) handleIsWrongPassword();
-    if (!response.error) router.push("/");
+
+    if (!response.error) {
+      router.push("/");
+      router.refresh();
+    }
   };
 
   return (
@@ -62,7 +67,6 @@ const LoginForm = () => {
       <p className={`text-red-500 text-sm ${!isWrongPassword && "invisible"}`}>Wrong Password</p>
 
       <Button variant="confirm">Sign In</Button>
-      {isLoading && <Loading />}
     </form>
   );
 };

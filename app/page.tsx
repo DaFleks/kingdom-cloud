@@ -1,22 +1,20 @@
-import { auth } from "@/auth";
-import Container from "@/components/aetherium/Container";
 import { redirect } from "next/navigation";
-import prisma from "@/lib/prisma";
-import SignOutButton from "@/components/kingdom-cloud/SignOutButton";
+import { auth } from "@/auth";
+
 import GamesList from "@/components/GamesList";
+
+import prisma from "@/lib/prisma";
+import Container from "@/components/aetherium/Container";
 
 export default async function Home() {
   const session = await auth();
   if (!session?.user) redirect("/login");
 
-  const games = await prisma.game.findMany();
+  const games = await prisma.game.findMany({ orderBy: { createdAt: "asc" } });
 
   return (
-    <Container
-      className="mx-auto space-y-8
-    xl:w-2/3">
+    <Container className="w-full xl:w-2/3 mx-auto">
       <GamesList games={games} />
-      <SignOutButton />
     </Container>
   );
 }

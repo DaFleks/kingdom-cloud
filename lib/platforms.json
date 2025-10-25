@@ -1,0 +1,98 @@
+[
+  {
+    "value": "PlayStation 5",
+    "output": "PS5"
+  },
+  {
+    "value": "PlayStation 4",
+    "output": "PS4"
+  },
+  {
+    "value": "PlayStation 3",
+    "output": "PS3"
+  },
+  {
+    "value": "PlayStation 2",
+    "output": "PS2"
+  },
+  {
+    "value": "PlayStation",
+    "output": "PSX"
+  },
+  {
+    "value": "PlayStation Portable",
+    "output": "PSP"
+  },
+  {
+    "value": "Xbox Series X",
+    "output": "XSX"
+  },
+  {
+    "value": "Xbox One",
+    "output": "XBONE"
+  },
+  {
+    "value": "Xbox 360",
+    "output": "X360"
+  },
+  {
+    "value": "Xbox",
+    "output": "Xbox"
+  },
+  {
+    "value": "Nintendo Switch 2",
+    "output": "Switch 2"
+  },
+  {
+    "value": "Nintendo Switch",
+    "output": "Switch"
+  },
+  {
+    "value": "Nintedo Wii U",
+    "output": "Wii U"
+  },
+  {
+    "value": "Nintendo Wii",
+    "output": "Wii"
+  },
+  {
+    "value": "Nintendo GameCube",
+    "output": "GameCube"
+  },
+  {
+    "value": "Nintendo 64",
+    "output": "N64"
+  },
+  {
+    "value": "Super Nintendo",
+    "output": "SNES"
+  },
+  {
+    "value": "Nintendo Entertainment System",
+    "output": "NES"
+  },
+  {
+    "value": "Nintendo 3DS",
+    "output": "3DS"
+  },
+  {
+    "value": "Nintendo DS",
+    "output": "DS"
+  },
+  {
+    "value": "Game Boy Advance",
+    "output": "GBA"
+  },
+  {
+    "value": "Game Boy Color",
+    "output": "GBC"
+  },
+  {
+    "value": "Game Boy",
+    "output": "GB"
+  },
+  {
+    "value": "PC",
+    "output": "PC"
+  }
+]
