@@ -2,8 +2,8 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import ImageKit from "imagekit";
 import { FileObject, FileType } from "imagekit/dist/libs/interfaces";
-import { imageOptimizer } from "next/dist/server/image-optimizer";
 import { createId } from "@paralleldrive/cuid2";
+import { auth } from "@/auth";
 
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
@@ -12,6 +12,9 @@ const imagekit = new ImageKit({
 });
 
 export async function POST(req: Request) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ message: "There was an error", status: 400 });
+
   const formData = await req.formData();
   const imageFiles = formData.getAll("imageFiles") as File[];
   let uploaded = null;
@@ -56,6 +59,8 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ message: "There was an error", status: 400 });
   const formData = await req.formData();
   const imageFiles = formData.getAll("imageFiles") as File[];
 
@@ -126,6 +131,8 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ message: "There was an error", status: 400 });
   const { id } = await req.json();
 
   try {
