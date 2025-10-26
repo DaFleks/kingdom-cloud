@@ -20,7 +20,7 @@ const Loading = () => {
             animate={{ rotateY: 360 }}
             transition={{ repeat: Infinity, duration: 1.0, ease: "linear" }}
             className="relative w-1/2 aspect-square m-auto xl:w-1/12">
-            <Image src={heartImage} alt="" fill style={{ objectFit: "contain" }} />
+            <Image src={heartImage} alt="" fill style={{ objectFit: "contain" }} sizes="(max-width: 768px) 100vw, 50vw" />
           </MotionContainer>
         </Container>
       )}
