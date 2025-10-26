@@ -18,7 +18,7 @@ import { Game } from "@prisma/client";
 import { useLoading } from "@/context/LoadingContext";
 import { useModal } from "@/context/ModalContext";
 import GameFormCompleteModal from "./GameFormCompleteModal";
-import ImageModal from "./ui/ImageModal";
+import ImageModal from "./ImageModal";
 
 type GameForm = {
   title: string;
@@ -266,7 +266,7 @@ const GameForm = (props: GameProps) => {
               onClick={handleDeleteExistingImage}>
               <XIcon className="!w-4 !h-4" />
             </Button>
-            <Image src={image} alt="" fill style={{ objectFit: "contain" }} className="p-2" />
+            <Image src={image} alt="" fill style={{ objectFit: "contain" }} className="p-2" sizes="(max-width: 768px) 100vw, 50vw" />
           </Container>
         ))}
         {previews.map((preview, i) => (
@@ -284,7 +284,7 @@ const GameForm = (props: GameProps) => {
               onClick={handleDeleteImage}>
               <XIcon className="!w-4 !h-4" />
             </Button>
-            <Image src={preview} alt="" fill style={{ objectFit: "contain" }} className="p-2" />
+            <Image src={preview} alt="" fill style={{ objectFit: "contain" }} className="p-2" sizes="(max-width: 768px) 100vw, 50vw" />
           </Container>
         ))}
       </Container>

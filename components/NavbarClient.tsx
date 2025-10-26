@@ -28,10 +28,10 @@ const NavbarClient = (props: NavbarClientProps) => {
           <Link href="/" className="relative w-full xl:w-1/4 flex items-center gap-4">
             <Container className="relative w-[35px] aspect-square">
               <Image
-                src={loginLogo.src}
-                alt=""
+                src={loginLogo}
+                alt="Crown Logo"
                 fill
-                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 16vw"
+                sizes="(max-width: 768px) 100vw, 25vw"
                 style={{ objectFit: "contain" }}
               />
             </Container>

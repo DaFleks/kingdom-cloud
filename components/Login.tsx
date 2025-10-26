@@ -36,10 +36,10 @@ const Login = () => {
         {/* OAuth Options */}
         <Container className="mx-auto w-fit space-x-4 pb-4">
           <Button className="relative w-16 h-16">
-            <Image src={googleIcon.src} alt="Google Icon Image" fill sizes="w" style={{ objectFit: "contain" }} className="p-4" />
+            <Image src={googleIcon.src} alt="Google Icon Image" fill sizes="100vw" style={{ objectFit: "contain" }} className="p-4" />
           </Button>
           <Button className="relative w-16 h-16">
-            <Image src={discordIcon.src} alt="Discord Icon Image" fill sizes="w" style={{ objectFit: "contain" }} className="p-4" />
+            <Image src={discordIcon.src} alt="Discord Icon Image" fill sizes="100vw" style={{ objectFit: "contain" }} className="p-4" />
           </Button>
         </Container>
       </Container>

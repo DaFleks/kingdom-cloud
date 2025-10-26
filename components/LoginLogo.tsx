@@ -14,7 +14,7 @@ const LoginLogo = (props: LoginLogoProps) => {
   return (
     <Container className={cn("flex flex-col gap-4", props.className)}>
       <Container className="w-1/4 aspect-square relative overflow-hidden m-auto">
-        <Image src={logo} alt="" fill style={{ objectFit: "contain" }} sizes="w"/>
+        <Image src={logo} alt="Crown Logo" fill style={{ objectFit: "contain" }} sizes="(max-width: 768px) 100vw, 25vw" />
       </Container>
       <h1 className="text-3xl text-center font-bold">KINGDOM CLOUD</h1>
     </Container>

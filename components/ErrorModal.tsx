@@ -1,8 +1,8 @@
 "use client";
 
 import { useModal } from "@/context/ModalContext";
-import Container from "../aetherium/Container";
-import { Button } from "./button";
+import Container from "./aetherium/Container";
+import { Button } from "./ui/button";
 
 const ErrorModal = () => {
   const { closeModal } = useModal();

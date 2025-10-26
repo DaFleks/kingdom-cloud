@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Container from "../aetherium/Container";
 import Text from "../aetherium/Text";
-import ImageModal from "../ui/ImageModal";
+import ImageModal from "../ImageModal";
 import { useModal } from "@/context/ModalContext";
 
 interface GameCardImageProps {
@@ -22,9 +22,9 @@ const GameCardImage = (props: GameCardImageProps) => {
       {props.src ? (
         <Image
           src={props.src}
-          alt={`Picture taken of ${props.title}`}
+          alt={`Picture of ${props.title}`}
           fill
-          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 16vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 25vw, 20vw"
           style={{ objectFit: "contain" }}
           className="p-2"
         />

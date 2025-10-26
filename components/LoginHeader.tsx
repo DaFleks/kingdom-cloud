@@ -11,7 +11,15 @@ import loginBg from "@/public/images/login-bg.webp";
 const LoginHeader = () => {
   return (
     <Container className="space-y-4 text-center p-8 flex items-center justify-center relative select-none overflow-hidden">
-      <Image src={loginBg.src} alt="" fill style={{ objectFit: "cover" }} className="" sizes="w" />
+      <Image
+        src={loginBg}
+        alt="KH2 Cover"
+        fill
+        style={{ objectFit: "cover" }}
+        className=""
+        sizes="(max-width: 768px) 100vw, 25vw"
+        placeholder="blur"
+      />
       <Container className="relative z-10">
         <LoginLogo />
       </Container>

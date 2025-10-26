@@ -9,10 +9,19 @@ export default function Wallpaper() {
   const pathname = usePathname();
 
   const getWallpaper = () => {
-    if (pathname.startsWith("/login")) return mainWallpaper.src;
-    if (pathname.startsWith("/")) return loginWallpaper.src;
+    if (pathname.startsWith("/login")) return mainWallpaper;
+    if (pathname.startsWith("/")) return loginWallpaper;
     return "/images/default-bg.jpg";
   };
 
-  return <Image src={getWallpaper()} alt="" fill priority className="fixed top-0 left-0 w-full h-full object-cover -z-10" />;
+  return (
+    <Image
+      src={getWallpaper()}
+      alt=""
+      fill
+      className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+      placeholder="blur"
+      sizes="(max-width: 768px) 100vw, 50vw"
+    />
+  );
 }

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Container from "./aetherium/Container";
 
 import { Button } from "./ui/button";
-import ErrorModal from "./ui/ErrorModal";
+import ErrorModal from "./ErrorModal";
 
 import { useLoading } from "@/context/LoadingContext";
 import { useModal } from "@/context/ModalContext";

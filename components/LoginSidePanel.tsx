@@ -19,12 +19,13 @@ const LoginSidePanel = () => {
     <Container className="hidden md:block p-8 min-w-[60%] w-[60%] relative">
       {imageIndex !== null && (
         <Image
-          src={backgrounds[imageIndex].src}
+          src={backgrounds[imageIndex]}
           fill
           alt="Login Side Wallpaper"
           style={{ objectFit: "cover", objectPosition: "50% 50%" }}
           priority
-          sizes="w"
+          sizes="10vw"
+          placeholder="blur"
         />
       )}
 
@@ -33,12 +34,13 @@ const LoginSidePanel = () => {
       <Container className="w-full h-full relative hidden md:block">
         {imageIndex !== null && (
           <Image
-            src={backgrounds[imageIndex].src}
+            src={backgrounds[imageIndex]}
             fill
             alt="Login Side Wallpaper"
             style={{ objectFit: "contain", objectPosition: "50% 50%", filter: "drop-shadow(0 7px 10px rgba(0,0,0,1.0))" }}
             priority
-            sizes="w"
+            sizes="25vw"
+            placeholder="blur"
           />
         )}
       </Container>
