@@ -11,7 +11,7 @@ export default async function Home() {
   const session = await auth();
   if (!session?.user) redirect("/login");
 
-  const games = await prisma.game.findMany({ orderBy: { createdAt: "asc" } });
+  const games = await prisma.game.findMany({ orderBy: { createdAt: "desc" } });
 
   return (
     <Container className="w-full xl:w-2/3 mx-auto">

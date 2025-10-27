@@ -26,7 +26,7 @@ const GameFormWrapper = (props: GameFormWrapperProps) => {
         <h1 className="text-2xl">{props.title}</h1>
 
         {props.id && (
-          <Button variant="neutral" className="!py-4 w-fit" onClick={handleDeleteGame}>
+          <Button variant="confirm" className="!py-4 w-fit" onClick={handleDeleteGame}>
             <TrashIcon />
           </Button>
         )}
