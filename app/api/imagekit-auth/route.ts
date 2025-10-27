@@ -24,7 +24,5 @@ export async function POST(req: Request) {
     return { token, expire, signature };
   });
 
-  const { token, expire, signature } = imagekitServer.getAuthenticationParameters();
-
   return NextResponse.json(authBatch);
 }

@@ -37,7 +37,7 @@ const GameForm = (props: GameProps) => {
     showLoading();
     const data = await gameForm.submit(e);
     hideLoading();
-    
+
     if (data.status === 201 || data.status === 200)
       openModal(<GameFormCompleteModal id={data.gameId} isUpdate={props.game ? true : false} />);
 
@@ -46,6 +46,9 @@ const GameForm = (props: GameProps) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-8 h-full overflow-hidden">
+      {gameForm.values.imageFiles.map((imageFile, i) => (
+        <li key={i}>{imageFile.name}</li>
+      ))}
       <Container className="grid grid-cols-3 gap-4">
         {/* TITLE */}
         <Container className="space-y-4 col-span-3">

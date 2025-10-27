@@ -75,9 +75,9 @@ export const useGameForm = (game?: Game) => {
   //	HANDLE DELETE IMAGE
   const handleDeleteImage = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-
+    console.log(e.currentTarget.name);
     const buttonIndex = parseInt(e.currentTarget.name);
-    setForm((prev) => ({ ...prev, images: [...prev.imageFiles].filter((image, i) => i !== buttonIndex) }));
+    setForm((prev) => ({ ...prev, imageFiles: [...prev.imageFiles].filter((image, i) => i !== buttonIndex) }));
     setImagePreviews((prev) => [...prev].filter((preview, i) => i !== buttonIndex));
   };
 

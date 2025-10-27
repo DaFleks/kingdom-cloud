@@ -79,7 +79,7 @@ export async function DELETE(req: Request) {
   try {
     await imagekit.deleteFolder(`/kingdom-cloud/games/${id}`);
   } catch (error) {
-    console.log(error);
+    // Ignored — cleanup failure is non-critical
   }
 
   return NextResponse.json({ message: "Game successfully deleted!", status: 200 });
