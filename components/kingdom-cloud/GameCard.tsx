@@ -11,10 +11,17 @@ import Text from "../aetherium/Text";
 import Link from "next/link";
 import GameCardImage from "./GameCardImage";
 import Card from "./Card";
+import Linkify from "linkify-react";
 
 interface GameCardProps {
   game: Game;
 }
+
+const linkifyOptions = {
+  target: "_blank",
+  rel: "noopener noreferrer",
+  className: "text-cyan-500 underline",
+};
 
 const GameCard = (props: GameCardProps) => {
   return (
@@ -37,7 +44,9 @@ const GameCard = (props: GameCardProps) => {
             <Text className="text-lg text-emerald-500">${props.game.price?.toFixed(2)}</Text>
           )}
           <Text>[{props.game.status}]</Text>
-          <Text>{props.game.notes}</Text>
+          <Text>
+            <Linkify options={linkifyOptions}>{props.game.notes}</Linkify>
+          </Text>
         </Container>
       </Container>
 
