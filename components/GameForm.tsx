@@ -23,11 +23,15 @@ import { useGameForm } from "@/hooks/useGameForm";
 
 import platforms from "@/lib/platforms.json";
 
+import { useSession } from "next-auth/react";
+
 interface GameProps {
   game?: Game;
 }
 
 const GameForm = (props: GameProps) => {
+  const { data: session } = useSession();
+
   //  Hooks
   const { gameForm } = useGameForm(props.game);
   const { showLoading, hideLoading } = useLoading();
@@ -61,6 +65,7 @@ const GameForm = (props: GameProps) => {
             required
             value={gameForm.values.title}
             onChange={gameForm.handleChange}
+            disabled={session?.user ? false : true}
           />
         </Container>
 
@@ -72,7 +77,7 @@ const GameForm = (props: GameProps) => {
             onValueChange={(value: string) => {
               gameForm.handleSelectChange("platform", value);
             }}>
-            <SelectTrigger className="w-full bg-neutral-800/80 border-0 py-6 mb-0">
+            <SelectTrigger className="w-full bg-neutral-800/80 border-0 py-6 mb-0" disabled={session?.user ? false : true}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -93,7 +98,7 @@ const GameForm = (props: GameProps) => {
             onValueChange={(value: string) => {
               gameForm.handleSelectChange("status", value);
             }}>
-            <SelectTrigger className="w-full bg-neutral-800/80 border-0 py-6 mb-0">
+            <SelectTrigger className="w-full bg-neutral-800/80 border-0 py-6 mb-0" disabled={session?.user ? false : true}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -117,6 +122,7 @@ const GameForm = (props: GameProps) => {
             value={gameForm.values.price ?? ""}
             min="0"
             step="0.01"
+            disabled={session?.user ? false : true}
           />
         </Container>
 
@@ -129,52 +135,55 @@ const GameForm = (props: GameProps) => {
             name="notes"
             onChange={gameForm.handleChange}
             value={gameForm.values.notes!}
+            disabled={session?.user ? false : true}
           />
         </Container>
       </Container>
 
       {/* TAKE A PHOTO BUTTON */}
-      <Container className="grid grid-cols-2 gap-4">
-        <Container>
-          <Label htmlFor="fileCameraBtn">
-            <Button id="fileCameraBtn" name="fileCameraBtn" type="button" variant="confirm" onClick={gameForm.handleFileClick}>
-              <CameraIcon />
-              Take a Photo
-            </Button>
-          </Label>
-          <Input
-            ref={gameForm.fileCameraRef}
-            className="bg-neutral-800/80 hidden"
-            type="file"
-            accept="image/*"
-            multiple
-            capture="environment"
-            id="fileCamera"
-            name="fileCamera"
-            onChange={gameForm.handleChange}
-          />
-        </Container>
+      {session?.user && (
+        <Container className="grid grid-cols-2 gap-4">
+          <Container>
+            <Label htmlFor="fileCameraBtn">
+              <Button id="fileCameraBtn" name="fileCameraBtn" type="button" variant="confirm" onClick={gameForm.handleFileClick}>
+                <CameraIcon />
+                Take a Photo
+              </Button>
+            </Label>
+            <Input
+              ref={gameForm.fileCameraRef}
+              className="bg-neutral-800/80 hidden"
+              type="file"
+              accept="image/*"
+              multiple
+              capture="environment"
+              id="fileCamera"
+              name="fileCamera"
+              onChange={gameForm.handleChange}
+            />
+          </Container>
 
-        {/* UPLOAD IMAGE BUTTON */}
-        <Container>
-          <Label htmlFor="images">
-            <Button id="fileGalleryBtn" name="fileGalleryBtn" type="button" variant="confirm" onClick={gameForm.handleFileClick}>
-              <ImageIcon />
-              Upload Images
-            </Button>
-          </Label>
-          <Input
-            ref={gameForm.fileGalleryRef}
-            className="bg-neutral-800/80 hidden"
-            type="file"
-            accept="image/*"
-            multiple
-            id="fileGallery"
-            name="fileGallery"
-            onChange={gameForm.handleChange}
-          />
+          {/* UPLOAD IMAGE BUTTON */}
+          <Container>
+            <Label htmlFor="images">
+              <Button id="fileGalleryBtn" name="fileGalleryBtn" type="button" variant="confirm" onClick={gameForm.handleFileClick}>
+                <ImageIcon />
+                Upload Images
+              </Button>
+            </Label>
+            <Input
+              ref={gameForm.fileGalleryRef}
+              className="bg-neutral-800/80 hidden"
+              type="file"
+              accept="image/*"
+              multiple
+              id="fileGallery"
+              name="fileGallery"
+              onChange={gameForm.handleChange}
+            />
+          </Container>
         </Container>
-      </Container>
+      )}
 
       {/* IMAGE PREVIEW GRID */}
       <Container className="grow grid grid-cols-3 gap-8 overflow-y-auto">
@@ -185,14 +194,16 @@ const GameForm = (props: GameProps) => {
             onClick={() => {
               openModal(<ImageModal src={image} />);
             }}>
-            <Button
-              id={i.toString()}
-              name={i.toString()}
-              type="button"
-              className="absolute z-10 !p-1 w-fit h-fit right-2 top-2"
-              onClick={gameForm.handleDeleteExistingImage}>
-              <XIcon className="!w-4 !h-4" />
-            </Button>
+            {session?.user && (
+              <Button
+                id={i.toString()}
+                name={i.toString()}
+                type="button"
+                className="absolute z-10 !p-1 w-fit h-fit right-2 top-2"
+                onClick={gameForm.handleDeleteExistingImage}>
+                <XIcon className="!w-4 !h-4" />
+              </Button>
+            )}
             <Image src={image} alt="" fill style={{ objectFit: "contain" }} className="p-2" sizes="(max-width: 768px) 100vw, 50vw" />
           </Container>
         ))}
@@ -203,20 +214,23 @@ const GameForm = (props: GameProps) => {
             onClick={() => {
               openModal(<ImageModal src={imagePreview} />);
             }}>
-            <Button
-              id={i.toString()}
-              name={i.toString()}
-              type="button"
-              className="absolute z-10 !p-1 w-fit h-fit right-2 top-2"
-              onClick={gameForm.handleDeleteImage}>
-              <XIcon className="!w-4 !h-4" />
-            </Button>
+            {session?.user && (
+              <Button
+                id={i.toString()}
+                name={i.toString()}
+                type="button"
+                className="absolute z-10 !p-1 w-fit h-fit right-2 top-2"
+                onClick={gameForm.handleDeleteImage}>
+                <XIcon className="!w-4 !h-4" />
+              </Button>
+            )}
+
             <Image src={imagePreview} alt="" fill style={{ objectFit: "contain" }} className="p-2" sizes="(max-width: 768px) 100vw, 50vw" />
           </Container>
         ))}
       </Container>
 
-      <Button variant="confirm">{props.game ? "Confirm Changes" : "Add Game"}</Button>
+      {session?.user && <Button variant="confirm">{props.game ? "Confirm Changes" : "Add Game"}</Button>}
     </form>
   );
 };

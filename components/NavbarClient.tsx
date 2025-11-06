@@ -27,43 +27,38 @@ const NavbarClient = (props: NavbarClientProps) => {
         <Container as="nav" className="xl:w-2/3 mx-auto h-[80px] p-4 flex justify-between items-center">
           <Link href="/" className="relative w-full xl:w-1/4 flex items-center gap-4">
             <Container className="relative w-[35px] aspect-square">
-              <Image
-                src={loginLogo}
-                alt="Crown Logo"
-                fill
-                sizes="(max-width: 768px) 100vw, 25vw"
-                style={{ objectFit: "contain" }}
-              />
+              <Image src={loginLogo} alt="Crown Logo" fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: "contain" }} />
             </Container>
             <Text className="text-sm w-full mt-2">KINGDOM CLOUD</Text>
           </Link>
           <Container className="space-x-12 flex items-center">
-            <Button variant="ghost" size="icon">
-              <Link href="/add">
-                <BookPlusIcon className="!w-8 !h-8" />
-              </Link>
-            </Button>
-
             {props.session?.user && (
-              <Popover>
-                <PopoverTrigger className="cursor-pointer">
-                  <Avatar>
-                    <AvatarImage src={props.session?.user?.image as string} />
-                    <AvatarFallback className="w-full h-full">CN</AvatarFallback>
-                  </Avatar>
-                </PopoverTrigger>
-                <PopoverContent className="bg-gradient-to-b from-neutral-700/80 to-neutral-950/80 border border-slate-500 rounded-none text-white space-y-4 p-8">
-                  <Avatar className="w-3/4 h-3/4 mx-auto shadow-lg shadow-neutral-950">
-                    <AvatarImage src={props.session?.user?.image || ""} />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
+              <>
+                <Button variant="ghost" size="icon">
+                  <Link href="/add">
+                    <BookPlusIcon className="!w-8 !h-8" />
+                  </Link>
+                </Button>
+                <Popover>
+                  <PopoverTrigger className="cursor-pointer">
+                    <Avatar>
+                      <AvatarImage src={props.session?.user?.image as string} />
+                      <AvatarFallback className="w-full h-full">CN</AvatarFallback>
+                    </Avatar>
+                  </PopoverTrigger>
+                  <PopoverContent className="bg-gradient-to-b from-neutral-700/80 to-neutral-950/80 border border-slate-500 rounded-none text-white space-y-4 p-8">
+                    <Avatar className="w-3/4 h-3/4 mx-auto shadow-lg shadow-neutral-950">
+                      <AvatarImage src={props.session?.user?.image || ""} />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
 
-                  <Text className="text-xl text-center">Hi, {props.session?.user.name}</Text>
-                  <Separator className="bg-neutral-700 !w-1/2 mx-auto my-8" />
-                  <Button variant="neutral">Edit Profile</Button>
-                  <SignOutButton />
-                </PopoverContent>
-              </Popover>
+                    <Text className="text-xl text-center">Hi, {props.session?.user.name}</Text>
+                    <Separator className="bg-neutral-700 !w-1/2 mx-auto my-8" />
+                    <Button variant="neutral">Edit Profile</Button>
+                    <SignOutButton />
+                  </PopoverContent>
+                </Popover>
+              </>
             )}
           </Container>
         </Container>

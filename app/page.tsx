@@ -8,8 +8,8 @@ import GamesList from "@/components/GamesList";
 import prisma from "@/lib/prisma";
 
 export default async function Home() {
-  const session = await auth();
-  if (!session?.user) redirect("/login");
+  // const session = await auth();
+  // if (!session?.user) redirect("/login");
 
   const games = await prisma.game.findMany({ orderBy: { createdAt: "desc" } });
 
